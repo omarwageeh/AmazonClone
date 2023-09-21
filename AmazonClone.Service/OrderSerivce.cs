@@ -15,20 +15,62 @@ namespace AmazonClone.Service
         {
             return await _unitOfWork.OrderRepository.Add(order);
         }
+        public async Task<Order?> GetOrder(Guid id, bool includeCustomer = false)
+        {
+            if(includeCustomer) 
+            {   
+                var order = await _unitOfWork.OrderRepository.GetAllWithInclude(o => o.Id == id, "Customer");
+                return order.FirstOrDefault();
+            }
+            else
+            {
+                var order = await _unitOfWork.OrderRepository.Get(o => o.Id == id);
+                return order;
+            }
+            
+        }
+        public async Task<Order?> GetAllOrderByCustomerId(string customerId)
+        {
+            var order = await _unitOfWork.OrderRepository.GetAllWithInclude(o => o.Customer.Id == Guid.Parse(customerId), "Customer");
+            return order.FirstOrDefault();
+
+        }
         public async Task UpdateOrder(Order order)
         {
             _unitOfWork.OrderRepository.Update(order);
+            await _unitOfWork.SaveChangesAsync();
+        }
+        public async Task DeleteOrder(Guid id)
+        {
+            var order = await _unitOfWork.OrderRepository.Get(o => o.Id == id);
+            if (order == null) return;
+            _unitOfWork.OrderRepository.Delete(order);
             await _unitOfWork.SaveChangesAsync();
         }
         public async Task<OrderDetails> AddOrderDetails(OrderDetails orderDetails)
         {
             return await _unitOfWork.OrderDetailsRepository.Add(orderDetails);
         }
-        public async Task<OrderDetails?> GetOrderDetails(string orderId, string productId)
+        public async Task<OrderDetails?> GetOrderDetails(Guid orderId, Guid productId)
         {
-            return await _unitOfWork.OrderDetailsRepository.Get(od => od.OrderId == Guid.Parse(orderId) && od.ProductId == Guid.Parse(productId));
+            var orderDetails = await _unitOfWork.OrderDetailsRepository.GetAllWithInclude(od => od.OrderId == orderId && od.ProductId == productId, "Product");
+            return orderDetails.FirstOrDefault();
         }
-        public async Task RemoveOrderDetails(string orderId, string productId)
+        public async Task<IEnumerable<OrderDetails?>> GetAllOrderDetails(Guid orderId, bool includeProduct = false)
+        {
+            if (includeProduct)
+            {
+                var orderDetials = await _unitOfWork.OrderDetailsRepository.GetAllWithInclude(od => od.OrderId == orderId, "Product");
+                return orderDetials;
+            }
+            else
+            {
+                var orderDetails = await _unitOfWork.OrderDetailsRepository.GetAll(od => od.OrderId == orderId);
+                return orderDetails;
+            }
+            
+        }
+        public async Task DeleteOrderDetails(Guid orderId, Guid productId)
         {
             var orderDetails = await GetOrderDetails(orderId, productId);
             if(orderDetails == null) 
