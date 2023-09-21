@@ -15,10 +15,10 @@ namespace AmazonClone.Service
         {
             return await _unitOfWork.OrderRepository.Add(order);
         }
-        public bool UpdateOrder(Order order)
+        public async Task UpdateOrder(Order order)
         {
             _unitOfWork.OrderRepository.Update(order);
-            return _unitOfWork.SaveChanges() > 0;
+            await _unitOfWork.SaveChangesAsync();
         }
         public async Task<OrderDetails> AddOrderDetails(OrderDetails orderDetails)
         {
