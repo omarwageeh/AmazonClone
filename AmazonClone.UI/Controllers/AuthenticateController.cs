@@ -3,7 +3,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -20,15 +19,15 @@ namespace AmazonClone.UI.Controllers
     [ApiController]
     public class AuthenticateController : ControllerBase
     {
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<Customer> userManager;
         //private readonly UserManager<Customer> customerManager;
-        private readonly SignInManager<User> signInManager;
+        private readonly SignInManager<Customer> signInManager;
         private readonly IConfiguration _configuration;
-        private readonly IUserStore<User> _userStore;
-        private readonly IUserEmailStore<User> _userEmailStore;
+        private readonly IUserStore<Customer> _userStore;
+        private readonly IUserEmailStore<Customer> _userEmailStore;
         //private string FullName;
 
-        public AuthenticateController(UserManager<User> userManager, IConfiguration configuration, SignInManager<User> signInManager, IUserStore<User> userStore)
+        public AuthenticateController(UserManager<Customer> userManager, IConfiguration configuration, SignInManager<Customer> signInManager, IUserStore<Customer> userStore)
         {
             this.userManager = userManager;
             //this.customerManager = customerManager;
@@ -87,7 +86,7 @@ namespace AmazonClone.UI.Controllers
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
 
-            User user = new();
+            Customer user = new("Address");
             user.FullName = model.FullName;
             await _userStore.SetUserNameAsync(user, model.Email, CancellationToken.None);
             await _userEmailStore.SetEmailAsync(user, model.Email, CancellationToken.None);
@@ -123,7 +122,7 @@ namespace AmazonClone.UI.Controllers
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
 
-            User user = new User()
+            Customer user = new Customer("Address")
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
@@ -136,13 +135,13 @@ namespace AmazonClone.UI.Controllers
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
-        private IUserEmailStore<User> GetEmailStore()
+        private IUserEmailStore<Customer> GetEmailStore()
         {
             if (!userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("loo");
             }
-            return (IUserEmailStore<User>)_userStore;
+            return (IUserEmailStore<Customer>)_userStore;
         }
     }
 }

@@ -8,7 +8,8 @@ namespace AmazonClone.Test.Model
         [Fact]
         public void HaveUserName()
         {
-            User sut = new User("name");
+            User sut = new User();
+            sut.UserName = "username";
             Assert.Equal("username", sut.UserName);
         }
 

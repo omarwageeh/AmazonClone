@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using AmazonClone.Model
 
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
+@inject SignInManager<Customer> SignInManager
+@inject UserManager<Customer> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

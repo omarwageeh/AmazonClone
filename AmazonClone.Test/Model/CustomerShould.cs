@@ -12,7 +12,7 @@ namespace AmazonClone.Test.Model
         [Fact]
         public void ShouldHaveAddress() 
         {
-            Customer sut = new Customer("name", "address");
+            Customer sut = new Customer("address");
             Assert.NotNull(sut.Address);
         }
     }
