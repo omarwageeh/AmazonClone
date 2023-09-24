@@ -8,7 +8,7 @@ namespace AmazonClone.Model
         public string? Phone { get; set; }
         [Required]
         public string Address { get; set; }
-        public Customer(string fullName, string address) : base(fullName)
+        public Customer(string address) : base()
         {
             Address = address;
         }

@@ -13,7 +13,7 @@ namespace AmazonClone.Service
         }
        public void Register(CustomerDto customer)
         {
-            Customer user = new Customer(customer.FullName, customer.Address)
+            Customer user = new Customer(customer.Address)
             {
                 Email = customer.Email,
                 Phone = customer.Phone,

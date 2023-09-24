@@ -9,9 +9,9 @@ namespace AmazonClone.Model
         [Required]
         public string FullName { get; set; }
         public bool isActive { get; set; }
-        public User(string fullName)
-        {
-            FullName = fullName;
-        }
+        //public User(string fullName)
+        //{
+        //    FullName = fullName;
+        //}
     }
 }

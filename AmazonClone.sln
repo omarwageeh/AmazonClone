@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonClone.Data", "AmazoneClone.Data\AmazonClone.Data.csproj", "{AE1A406F-CA1C-4353-989A-6C98D9A1AD00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmazonClone.Data", "AmazoneClone.Data\AmazonClone.Data.csproj", "{AE1A406F-CA1C-4353-989A-6C98D9A1AD00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonClone.Model", "AmazonClone.Models\AmazonClone.Model.csproj", "{1D7E0A90-7D4B-4765-B2DA-6F5A96D6C086}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmazonClone.Model", "AmazonClone.Models\AmazonClone.Model.csproj", "{1D7E0A90-7D4B-4765-B2DA-6F5A96D6C086}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonClone.Dto", "AmazonClone.Dto\AmazonClone.Dto.csproj", "{1C46BEF2-2A70-4382-B07F-6A0C8A24BA29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmazonClone.Dto", "AmazonClone.Dto\AmazonClone.Dto.csproj", "{1C46BEF2-2A70-4382-B07F-6A0C8A24BA29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonClone.Service", "AmazonClone.Service\AmazonClone.Service.csproj", "{965518FB-BC61-47F6-ADDD-BBC2395E7294}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmazonClone.Service", "AmazonClone.Service\AmazonClone.Service.csproj", "{965518FB-BC61-47F6-ADDD-BBC2395E7294}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonClone.Repository", "AmazonClone.Repository\AmazonClone.Repository.csproj", "{E1FE7D91-BFAA-4BBB-BB30-C4A2E950646A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmazonClone.Repository", "AmazonClone.Repository\AmazonClone.Repository.csproj", "{E1FE7D91-BFAA-4BBB-BB30-C4A2E950646A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonClone.Test", "AmazonClone.Test\AmazonClone.Test.csproj", "{CC53F01B-9076-4CDA-A942-501937C43B84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmazonClone.Test", "AmazonClone.Test\AmazonClone.Test.csproj", "{CC53F01B-9076-4CDA-A942-501937C43B84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonClone.UI", "AmazonClone.UI\AmazonClone.UI.csproj", "{54809871-4B4C-4C54-88C8-B779C0A4DB44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{CC53F01B-9076-4CDA-A942-501937C43B84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC53F01B-9076-4CDA-A942-501937C43B84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC53F01B-9076-4CDA-A942-501937C43B84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54809871-4B4C-4C54-88C8-B779C0A4DB44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54809871-4B4C-4C54-88C8-B779C0A4DB44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54809871-4B4C-4C54-88C8-B779C0A4DB44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54809871-4B4C-4C54-88C8-B779C0A4DB44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

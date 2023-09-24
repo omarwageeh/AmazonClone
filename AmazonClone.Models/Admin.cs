@@ -4,7 +4,7 @@
     {
         public string? JobTitle { get; set; }
         public DateTime HireDate { get; set; } = DateTime.Now;
-        public Admin(string fullName):base(fullName)
+        public Admin(string fullName):base()
         {
             
         }
