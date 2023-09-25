@@ -1,0 +1,67 @@
+﻿@page
+@using AmazonClone.UI.Pages;
+@using AmazonClone.UI.Pages.Products;
+@model ProductTestModel
+
+@{
+    ViewData["Title"] = "ProductTest";
+}
+
+<h1>ProductTest</h1>
+
+<p>
+    <a asp-page="/Product/ProductCreate">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].NameEn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].NameAr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].StockQuantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].Category)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Product) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameEn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameAr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                 <form method="post">
+                    <div class="form-group">
+                        <input type="submit" value="Add" class="btn btn-primary" asp-route-id="@item.Id"/>
+                    </div>
+                 </form>
+                
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

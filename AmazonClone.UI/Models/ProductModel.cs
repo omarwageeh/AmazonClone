@@ -5,13 +5,23 @@ namespace AmazonClone.UI.Models
 {
     public class ProductModel
     {
+        public Guid Id { get; set; }
         public string NameEn { get; set; }
         public string NameAr { get; set; }
         public decimal UnitPrice { get; set; }
-        public ProductModel(string nameEn, string nameAr)
+        public Guid CategoryId { get; set; }
+        public ProductModel(Product product)
         {
-            NameEn = nameEn;
-            NameAr = nameAr;
+            Id = product.Id;
+            NameAr = product.NameAr;
+            NameEn = product.NameEn;
+            UnitPrice = product.UnitPrice;
+            CategoryId = product.CategoryId;
+        }
+        public ProductModel()
+        {
+            NameEn = string.Empty; 
+            NameAr = string.Empty;
         }
     }
 }
