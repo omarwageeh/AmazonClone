@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace AmazonClone.Model
 {
@@ -10,8 +11,9 @@ namespace AmazonClone.Model
         public string NameAr { get; set; }
         public decimal UnitPrice { get; set; }
         public int StockQuantity { get; set; }
-        public Guid CategoryId { get; set; }
-        public Category? Category { get; set; } = null!;
+        public Guid CategoryId { get; set; }56
+        [ValidateNever]
+        public virtual Category Category { get; set; } = null!;
 
 
         public Product() { }
@@ -19,6 +21,11 @@ namespace AmazonClone.Model
         {
             NameEn = nameEn;
             NameAr = nameAr;
+        }
+        public Product()
+        {
+            NameEn = string.Empty;
+            NameAr = string.Empty;
         }
     }
 }

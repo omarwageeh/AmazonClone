@@ -6,7 +6,7 @@ namespace AmazonClone.Model
     {
         [Required]
         public string Name { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
         public Category(string name) 
         {
             Name = name;

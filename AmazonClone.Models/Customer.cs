@@ -12,5 +12,9 @@ namespace AmazonClone.Model
         {
             Address = address;
         }
+        public Customer() : base()
+        {
+            Address = "Address";
+        }
     }
 }
