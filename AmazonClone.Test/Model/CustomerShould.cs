@@ -1,9 +1,9 @@
-﻿using AmazonClone.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//using AmazonClone.Model;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
 namespace AmazonClone.Test.Model
 {
@@ -17,3 +17,4 @@ namespace AmazonClone.Test.Model
         }
     }
 }
+
