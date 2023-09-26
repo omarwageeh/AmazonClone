@@ -17,17 +17,9 @@ namespace AmazonClone.Service
         {
             return await _unitOfWork.ProductRepository.GetAllWithInclude(predicate, "Category");
         }
-        public async void AddProduct(ProductDto product)
+        public async Task AddProduct(Product product)
         {
-            var cat = await _unitOfWork.CategoryRepository.Get(c => c.Name == product.catName) ?? await _unitOfWork.CategoryRepository.Add(new Category(product.catName));
-            if (cat == null) return;
-            Product prod = new Product(product.NameEn,product.NameAr)
-            {
-                UnitPrice = product.UnitPrice,
-                StockQuantity = product.StockQuantity,
-                Category = cat,
-            };
-            await _unitOfWork.ProductRepository.Add(prod);
+            await _unitOfWork.ProductRepository.Add(product);
             await _unitOfWork.SaveChangesAsync();
         }
         public async Task UpdateProduct(Product product)
