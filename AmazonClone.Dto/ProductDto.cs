@@ -7,5 +7,6 @@
         public decimal UnitPrice { get; set; }
         public int StockQuantity { get; set; }
         public string catName { get; set; } = string.Empty;
+
     }
 }

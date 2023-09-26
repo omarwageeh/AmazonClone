@@ -1,4 +1,5 @@
-﻿using AmazonClone.UI.Models;
+﻿using AmazonClone.Service;
+using AmazonClone.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,14 +9,20 @@ namespace AmazonClone.UI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ProductService _productService;
+        private readonly CategoryService _categoryService;
+
+        public HomeController(ILogger<HomeController> logger , ProductService productService, CategoryService categoryService)
         {
             _logger = logger;
+            _productService = productService;
+            _categoryService = categoryService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var dataContext = await _categoryService.GetCategories(p => !p.IsDeleted);
+            return View(dataContext);
         }
 
         public IActionResult Privacy()

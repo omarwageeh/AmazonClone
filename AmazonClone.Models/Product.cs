@@ -11,8 +11,10 @@ namespace AmazonClone.Model
         public decimal UnitPrice { get; set; }
         public int StockQuantity { get; set; }
         public Guid CategoryId { get; set; }
-        public Category Category { get; set; } = null!;
+        public Category? Category { get; set; } = null!;
 
+
+        public Product() { }
         public Product(string nameEn, string nameAr) 
         {
             NameEn = nameEn;
