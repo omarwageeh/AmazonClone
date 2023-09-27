@@ -13,6 +13,7 @@ using Microsoft.CodeAnalysis;
 using AmazonClone.UI.Models;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
+using AmazonClone.UI.Services;
 
 namespace AmazonClone.UI.Controllers
 {
@@ -21,24 +22,16 @@ namespace AmazonClone.UI.Controllers
     {
         private readonly ProductService _productService;
         private readonly CategoryService _categoryService;
+        private readonly CartService _cartService;
 
-        public ProductsController(ProductService productService, CategoryService categoryService)
+        public ProductsController(ProductService productService, CategoryService categoryService, CartService cartService)
         {
             _productService = productService;
             _categoryService = categoryService;
+            _cartService = cartService;
         }
 
-        private async Task<Cart> GetCartFromSession()
-        {
-            await HttpContext.Session.LoadAsync();
-            var sessionString = HttpContext.Session.GetString("cart");
-            if (sessionString is not null)
-            {
-                return JsonSerializer.Deserialize<Cart>(sessionString)!;
-            }
 
-            return new Cart();
-        }
         // GET: Products
         public async Task<IActionResult> Index(Guid? categoryId)
         { 
@@ -96,7 +89,7 @@ namespace AmazonClone.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddToCart(Guid id, int quantity = 1)
         {
-            Cart cart = await GetCartFromSession();
+            Cart cart = await _cartService.GetCartFromSession();
 
             var product = (await _productService.GetProducts(p => p.Id == id))!.FirstOrDefault();
 
@@ -112,7 +105,8 @@ namespace AmazonClone.UI.Controllers
                     ProductModel productModel = new ProductModel(product);
                     cart.Items.Add(new CartItem(productModel, quantity));
                 }
-                HttpContext.Session.SetString("cart", JsonSerializer.Serialize(cart));
+                 _cartService.SetCart(cart);
+                
 
                 TempData["Success"] = "The product is added successfully";
             }

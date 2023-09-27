@@ -4,6 +4,7 @@ using AmazonClone.Repository.Interface;
 using AmazonClone.Repository.Repository;
 using AmazonClone.Repository.UnitOfWork;
 using AmazonClone.Service;
+using AmazonClone.UI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +42,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<OrderSerivce>();
+builder.Services.AddScoped<CartService>();
 
 #region Authentication 
 //builder.Services.AddAuthentication(options =>
