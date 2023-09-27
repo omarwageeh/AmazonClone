@@ -5,6 +5,8 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
+using AmazonClone.Model;
+
 namespace AmazonClone.Test.Model
 {
     public class CustomerShould

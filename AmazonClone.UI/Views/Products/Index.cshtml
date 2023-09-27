@@ -1,31 +1,28 @@
-﻿
-@model List<Product>
+﻿@model List<Product>
 @{
     ViewData["Title"] = "Index";
 }
 
-<link rel="stylesheet" type="text/css" href="./css/products.css"/>
-
 <div class="wrapper">
-<nav id="sidebar">
+    <nav id="sidebar">
 
-    <ul class="list-unstyled components">
-      
+        <ul class="list-unstyled components">
+
             <li class="font-weight-bold mt-2">Category</li>
-            @foreach(var category in Model)
+            @foreach (var product in Model)
             {
-                <li class="font-weight-light">@category.NameEn</li>
+                <li class="font-weight-light">@product.Category.Name</li>
             }
             <li>
-        </li>
+            </li>
             <li class="mt-4 font-weight-bold ">Price</li>
-        <li class="price">
-            
-            <ul class="price font-weight-light">
-                <li>
+            <li class="price">
+
+                <ul class="price font-weight-light">
+                    <li>
                         <input type="checkbox" id="price" name="price" value="price">
-                        <label for="price" > 20 to 50 EGP</label><br>
-                </li>
+                        <label for="price"> 20 to 50 EGP</label><br>
+                    </li>
                     <li>
                         <input type="checkbox" id="price" name="price" value="price">
                         <label for="price"> 100 to 200 EGP</label><br>
@@ -34,37 +31,40 @@
                         <input type="checkbox" id="price" name="price" value="price">
                         <label for="price"> 500 to 1000 EGP</label><br>
                     </li>
-            </ul>
-        </li>
-        
-    </ul>
-</nav>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
 
 
-                <div class="container-fluid">
-                    <div class="fashion_section_2">
-                        <div class="row">
-                           
-                            @foreach (var product in Model)
-                            {
-                            <div class="col-lg-3 col-sm-3" >
-                        <a asp-controller="Products" asp-action="Details" asp-route-productId="@product.Id">
-                                    <div class="box_main">
-                                        <h4 class="shirt_text">@product.NameEn</h4>
-                                        <div class="tshirt_img"><img src="images/jhumka-img.png"></div>
-                                        <div class="btn_main">
-                                            <div class="buy_bt">
-                                                <a asp-controller="Cart" asp-action="Index" >Add to cart</a>
-                                            </div>
+    <div class="fashion_section_2">
+        <div class="row">
+
+            @foreach (var product in Model)
+            {
+                <div class="col-lg-3 col-sm-3">
+                    <a asp-controller="Products" asp-action="Details" asp-route-productId="@product.Id">
+                        <div class="box_main">
+                            <h4 class="shirt_text">@product.NameEn</h4>
+                            <div class="tshirt_img"><img src="images/jhumka-img.png"></div>
+                            <div class="btn_main">
+                                <div class="buy_bt">
+                                    @* <a asp-controller="Cart" asp-action="Index" >Add to cart</a> *@
+                                    <form method="post">
+                                        <div class="form-group">
+                                            <button type="submit" value="Add" class="btn btn-primary" asp-action="AddToCart" asp-route-id="@product.Id">Add to Cart</button>
                                         </div>
-                                    </div>
-                        </a>
-                             </div>
-                            }
-
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </a>
+                </div>
+            }
+            >
+        </div>
 
-</div>
+    </div>
 
 </div>

@@ -116,7 +116,7 @@ namespace ECommerceCore.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToPage("ProductTest");
+                    return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {

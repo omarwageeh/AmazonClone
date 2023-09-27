@@ -13,7 +13,9 @@ namespace AmazonClone.Service
         }
         public async Task<Order> AddOrder(Order order)
         {
-            return await _unitOfWork.OrderRepository.Add(order);
+            var entity = await _unitOfWork.OrderRepository.Add(order);
+            await _unitOfWork.SaveChangesAsync();
+            return entity;
         }
         public async Task<Order?> GetOrder(Guid id, bool includeCustomer = false)
         {
@@ -49,7 +51,9 @@ namespace AmazonClone.Service
         }
         public async Task<OrderDetails> AddOrderDetails(OrderDetails orderDetails)
         {
-            return await _unitOfWork.OrderDetailsRepository.Add(orderDetails);
+            var entity = await _unitOfWork.OrderDetailsRepository.Add(orderDetails);
+            await _unitOfWork.SaveChangesAsync();
+            return entity;
         }
         public async Task<OrderDetails?> GetOrderDetails(Guid orderId, Guid productId)
         {

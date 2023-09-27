@@ -1,56 +1,56 @@
 ﻿using AmazonClone.Model;
 using AmazonClone.Service;
+using AmazonClone.UI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 
 namespace AmazonClone.UI.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly ProductService _productService;
-        public CartController(ProductService productService)
+        private readonly OrderSerivce _orderService;
+        public CartController(ProductService productService, OrderSerivce orderSerivce)
         {
             _productService = productService;
+            _orderService = orderSerivce;
         }
-        public async Task<IActionResult> Index()
-        {
-            // Get the value of the session
-            var data = await GetBooksFromSession();
-
-            //Pass the list to the view to render
-            return View(data);
-        }
-
-        private async Task<List<Product>> GetBooksFromSession()
+        private async Task<Cart> GetCartFromSession()
         {
             await HttpContext.Session.LoadAsync();
             var sessionString = HttpContext.Session.GetString("cart");
             if (sessionString is not null)
             {
-                return JsonSerializer.Deserialize<List<Product>>(sessionString)!;
+                return JsonSerializer.Deserialize<Cart>(sessionString)!;
             }
 
-            return Enumerable.Empty<Product>().ToList();
+            return new Cart();
         }
-        public async Task<IActionResult> AddToCart(Guid id)
+        public async Task<IActionResult> Index()
         {
-            var data = await GetBooksFromSession();
+            // Get the value of the session
+            var data = await GetCartFromSession();
 
-            var product =  (await _productService.GetProducts(p => p.Id == id))!.FirstOrDefault();
-
-            if (product is not null)
-            {
-                data.Add(product);
-
-                HttpContext.Session.SetString("cart", JsonSerializer.Serialize(data));
-
-                TempData["Success"] = "The product is added successfully";
-
-                return RedirectToAction("Index");
-            }
-
-            return NotFound();
+            //Pass the list to the view to render
+            return View(data);
         }
+        public async Task<IActionResult> Checkout()
+        {
+            var cart = await GetCartFromSession();
+            var claim = User.Claims.FirstOrDefault(c=>c.Type == ClaimTypes.NameIdentifier);
+            Guid id = Guid.Parse(claim?.Value!);
+            var order  = await _orderService.AddOrder(new Order() { CustomerId = id, Status= Model.Enum.Status.Pending, TotalPrice = cart.TotalPrice });
+            foreach (var cartItem in cart.Items)
+            {
+                await _orderService.AddOrderDetails(new OrderDetails() { OrderId = order.Id, ProductId = cartItem.Product.Id, ProductCount = cartItem.ProductCount, UnitPrice = cartItem.Product.UnitPrice });
+            }
+            
+            return RedirectToAction(nameof(Index), "Home");
+        }
+
     }
 }

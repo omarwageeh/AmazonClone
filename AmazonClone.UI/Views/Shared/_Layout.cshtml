@@ -1,5 +1,4 @@
-﻿@* @model List<Category> *@
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,6 +42,8 @@
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Poppins:400,700&display=swap&subset=latin-ext" rel="stylesheet">
     <link rel="stylesheet" href="~/css/owl.carousel.min.css">
     <link rel="stylesoeet" href="~/css/owl.theme.default.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/products.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/Details.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
 
 </head>
@@ -81,7 +82,7 @@
                         <div class="login_menu">
                             <ul class="d-flex align-items-center">
                                 <li>
-                                     <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
                                         <i class="fa fa-user" aria-hidden="true"></i>
 
                                         <span class="padding_10">Hello, Sign in</span>
@@ -93,7 +94,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a asp-controller="Cart" asp-action="Index">
                                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
 
                                         <span class="padding_10">Cart</span>
@@ -111,22 +112,6 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03" style="color:white!important">
-                @* <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    @foreach(var category in Model){
-                   
-                    <li class="nav-item dropdown dmenu">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                                @category.Name
-                        </a>
-                        <div class="dropdown-menu sm-menu">
-                            <a class="dropdown-item" href="#">service2</a>
-                            <a class="dropdown-item" href="#">service 2</a>
-                            <a class="dropdown-item" href="#">service 3</a>
-                        </div>
-                    </li>
-                    }
-
-                </ul> *@
                 <div class="social-part">
                     <i class="fa fa-facebook" aria-hidden="true"></i>
                     <i class="fa fa-twitter" aria-hidden="true"></i>
@@ -135,10 +120,28 @@
             </div>
         </nav>
     </header>
-    <div class="container-fluid">
+    <div class="container">
         <main role="main" class="">
             @RenderBody()
         </main>
+    </div>
+    <!-- footer section start -->
+    <div class="footer_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="d-flex justify-content-center py-3" style="background-color:#37475a; color:white">Back to top</div>
+            </div>
+            <div class="footer_menu">
+                <ul>
+                    <li><a href="#">Best Sellers</a></li>
+                    <li><a href="#">Gift Ideas</a></li>
+                    <li><a href="#">New Releases</a></li>
+                    <li><a href="#">Today's Deals</a></li>
+                    <li><a href="#">Customer Service</a></li>
+                </ul>
+            </div>
+            <div class="location_main">Help Line  Number : <a href="#">+1 1800 1200 1200</a></div>
+        </div>
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

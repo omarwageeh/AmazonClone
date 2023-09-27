@@ -7,13 +7,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AmazonClone.Data.Context;
 using AmazonClone.Model;
-using AmazonClone.Repository.UnitOfWork;
-using AmazonClone.Repository.Interface;
+
 using AmazonClone.Service;
 using Microsoft.CodeAnalysis;
+using AmazonClone.UI.Models;
+using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AmazonClone.UI.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly ProductService _productService;
@@ -25,11 +28,27 @@ namespace AmazonClone.UI.Controllers
             _categoryService = categoryService;
         }
 
-        // GET: Products
-        public async Task<IActionResult> Index(Guid? CategoryId)
+        private async Task<Cart> GetCartFromSession()
         {
-            var dataContext = await _productService.GetProducts(p => p.CategoryId == CategoryId);
-            return View(dataContext);
+            await HttpContext.Session.LoadAsync();
+            var sessionString = HttpContext.Session.GetString("cart");
+            if (sessionString is not null)
+            {
+                return JsonSerializer.Deserialize<Cart>(sessionString)!;
+            }
+
+            return new Cart();
+        }
+        // GET: Products
+        public async Task<IActionResult> Index(Guid? categoryId)
+        { 
+            if (categoryId is not null)
+            {
+                var dataContext = await _productService.GetProducts(p => p.CategoryId == categoryId);
+                return View(dataContext);
+            }
+            return View(await _productService.GetProducts(p => !p.IsDeleted));
+            
         }
 
         // GET: Products/Details/5
@@ -46,15 +65,8 @@ namespace AmazonClone.UI.Controllers
             {
                 return NotFound();
             }
-
-            return View(product.FirstOrDefault());
-
-
-            //// Retrieve the product details from your data source
-            //var product = _productService.GetProducts(p => p.Id == productId);
-
-            //// Pass the product details to the view
-            //return View(product);
+            ProductDetailsModel productDetailsModel = new ProductDetailsModel(new ProductModel(product.FirstOrDefault()!));
+            return View(productDetailsModel);
         }
 
         // GET: Products/Create
@@ -79,6 +91,32 @@ namespace AmazonClone.UI.Controllers
             }
             ViewData["CategoryId"] = new SelectList(await _categoryService.GetCategories(), "Id", "Name", product.CategoryId);
             return View(product);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddToCart(Guid id, int quantity = 1)
+        {
+            Cart cart = await GetCartFromSession();
+
+            var product = (await _productService.GetProducts(p => p.Id == id))!.FirstOrDefault();
+
+            if (product is not null)
+            {
+
+                if (cart.Items.Exists(item => item.Product.Id == id))
+                {
+                    cart.Items.Find(item => item.Product.Id == id)!.ProductCount += quantity;
+                }
+                else
+                {
+                    ProductModel productModel = new ProductModel(product);
+                    cart.Items.Add(new CartItem(productModel, quantity));
+                }
+                HttpContext.Session.SetString("cart", JsonSerializer.Serialize(cart));
+
+                TempData["Success"] = "The product is added successfully";
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

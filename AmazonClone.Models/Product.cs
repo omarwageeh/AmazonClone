@@ -11,21 +11,20 @@ namespace AmazonClone.Model
         public string NameAr { get; set; }
         public decimal UnitPrice { get; set; }
         public int StockQuantity { get; set; }
-        public Guid CategoryId { get; set; }56
+        public Guid CategoryId { get; set; }
         [ValidateNever]
         public virtual Category Category { get; set; } = null!;
 
 
-        public Product() { }
+        public Product() 
+        {
+            NameEn = string.Empty;
+            NameAr = string.Empty;
+        }
         public Product(string nameEn, string nameAr) 
         {
             NameEn = nameEn;
             NameAr = nameAr;
-        }
-        public Product()
-        {
-            NameEn = string.Empty;
-            NameAr = string.Empty;
         }
     }
 }

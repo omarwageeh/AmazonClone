@@ -22,12 +22,13 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole<Guid>>()
-    .AddEntityFrameworkStores<DbContext>();
+builder.Services.AddDefaultIdentity<Customer>(o => {
+    o.SignIn.RequireConfirmedAccount = false;
+    o.SignIn.RequireConfirmedEmail = false;
+    o.User.RequireUniqueEmail = true;
+}).AddRoles<IdentityRole<Guid>>()
+    .AddEntityFrameworkStores<DataContext>();
 
-
-
-builder.Services.AddScoped<DbContext, DataContext>();
 
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -41,26 +42,27 @@ builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<OrderSerivce>();
 
-
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-    {
-        options.SaveToken = true;
-        options.RequireHttpsMetadata = false;
-        options.TokenValidationParameters = new TokenValidationParameters()
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidAudience = builder.Configuration["JWT:ValidAudience"],
-            ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
-        };
-    });
+#region Authentication 
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+//})
+//.AddJwtBearer(options =>
+//    {
+//        options.SaveToken = true;
+//        options.RequireHttpsMetadata = false;
+//        options.TokenValidationParameters = new TokenValidationParameters()
+//        {
+//            ValidateIssuer = true,
+//            ValidateAudience = true,
+//            ValidAudience = builder.Configuration["JWT:ValidAudience"],
+//            ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
+//        };
+//    });
+#endregion
 
 var app = builder.Build();
 
