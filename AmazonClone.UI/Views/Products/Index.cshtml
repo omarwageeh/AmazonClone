@@ -53,7 +53,9 @@
                                     @* <a asp-controller="Cart" asp-action="Index" >Add to cart</a> *@
                                     <form method="post">
                                         <div class="form-group">
-                                            <button type="submit" value="Add" class="btn btn-primary" asp-action="AddToCart" asp-route-id="@product.Id">Add to Cart</button>
+@*                                             <button type="submit" value="Add" class="btn btn-primary" asp-controller="Cart" asp-action="Index" asp-route-id="@product.Id">Add to Cart</button>
+ *@
+                                            <a href="@Url.Action("Index", "Cart")">Add to Cart</a>
                                         </div>
                                     </form>
                                 </div>

@@ -17,8 +17,12 @@ namespace AmazonClone.UI.Controllers
             _orderService = orderSerivce;
             _cartService = cartService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Guid? productId)
         {
+            if(productId != null)
+            {
+                //Add to Cart
+            }
             var data = await _cartService.GetCartFromSession();
 
             return View(data);
@@ -39,6 +43,7 @@ namespace AmazonClone.UI.Controllers
             
             return RedirectToAction(nameof(Index), "Home");
         }
+
 
     }
 }

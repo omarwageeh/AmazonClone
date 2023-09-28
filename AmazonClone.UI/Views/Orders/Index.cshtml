@@ -1,0 +1,64 @@
+﻿@model OrderViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<link rel="stylesheet" href="~/css/Orders.css">
+
+<h1>Your Orders</h1>
+<div class="container py-3">
+    <!-- Card Start -->
+    <div class="card ">
+        <div class="row ">
+            @foreach(var item in Model.Orders){
+            <div class="col-md-12 ">
+
+                <div class="p-3 w-100" style="background-color:#f0f2f2; border-bottom:1px solid grey">
+                    <div class=" d-flex justify-content-between">
+
+                        <div class=" w-50 card-title d-flex justify-content-md-between">
+                            <h4>
+                                ORDER PLACED
+                                (@item!.Order.CreatedOn)
+                            </h4>
+                            <h4>Total</h4>
+                            <h4>Ship To (@item!.Order.Customer.FullName)</h4>
+
+                        </div>
+
+                        <div class="w-50 d-flex justify-content-end">
+                            <h4 class="mx-4">
+                                Order Id : (@item.Order.Id)
+                            </h4>
+                            <a asp-controller="Products" asp-action="Details"> View Order Details</a>
+                        </div>
+                    </div>
+                </div>
+                @foreach(var orderDetails in item.OrderDetails){
+                <div class="row p-3 ">
+                    <div class="col-md-2">
+                        <img class="d-block" src="https://picsum.photos/150?image=641" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="w-50">
+                            <p>@orderDetails!.Product.NameEn</p>
+
+                            <div class="d-flex justify-content-md-start ">
+                                <button class="btn btn-warning w-20 ms-4">Buy it again</button>
+                                        <a class="btn btn-light  w-20 ms-4 " asp-controller="Products" asp-action="Details" asp-route-productId="@orderDetails.ProductId"> View your item</a>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                }
+
+            </div>
+            }
+        </div>
+        
+
+    </div>
+</div>
+</div>

@@ -31,9 +31,12 @@
                         </div>
                     </h6>
 
-                    <button type="submit" asp-action="AddToCart" class="btn btn-warning btn-lg btn-block w-100" asp-route-id="@Model.Product.Id" asp-route-quantity="@Model.Quantity">Buy Now</button>
-                    <button type="submit" asp-action="AddToCart" class="btn btn-success btn-lg btn-block w-100">Add to Cart</button>
-                </form>
+                    <a asp-action="Index" class="btn btn-warning btn-lg btn-block w-100" asp-controller="Cart" asp-route-id="@Model.Product.Id" asp-route-quantity="@Model.Quantity">Buy Now</a>
+@*                     <button type="submit" asp-action="AddToCart" class="btn btn-success btn-lg btn-block w-100">Add to Cart</button>
+ *@
+                    <button type="submit" asp-action="AddToCart" class="btn btn-warning btn-lg btn-block w-100" asp-route-id="@Model.Product.Id" asp-route-quantity="@Model.Quantity">Add To Cart</button>
+
+</form>
             </div>
         </div>
     </div>
